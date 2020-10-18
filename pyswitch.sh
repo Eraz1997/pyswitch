@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if command -v git ; then
+if command -v git &> /dev/null ; then
 	if ! git fetch --dry-run &> /dev/null ; then
 		echo "Update available. Updating..."
 		if ! git pull &> /dev/null ; then
