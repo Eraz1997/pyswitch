@@ -1,5 +1,16 @@
 #!/bin/bash
 
+if command -v git ; then
+	if ! git fetch --dry-run &> /dev/null ; then
+		echo "Update available. Updating..."
+		if ! git pull &> /dev/null ; then
+			echo "Error while updating. You can continue using pyswitch though."
+		else
+			echo "Updated successfully."
+		fi
+	fi
+fi
+
 if [ $# -lt 1 ] || [ "$1" = "--help" ] || [ "$2" = "--help" ]; then
 	echo "Python Environment Switcher"
 	echo "It activates environments located in $HOME/python-environments/"
