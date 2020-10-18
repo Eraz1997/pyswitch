@@ -1,8 +1,7 @@
 #!/bin/bash
 
 if [ $# -lt 1 ] || [ "$1" = "--help" ] || [ "$2" = "--help" ]; then
-	echo
-	echo "Python Environment Switcher (by Eraz1997)"
+	echo "Python Environment Switcher"
 	echo "It activates environments located in $HOME/python-environments/"
 	echo
 	echo "Usage: 'pyswitch [ENVIRONMENT] [OPTIONS]' or 'pyswitch deactivate'"
