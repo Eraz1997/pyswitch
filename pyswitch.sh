@@ -4,9 +4,10 @@ if [ $# -lt 1 ] || [ "$1" = "--help" ] || [ "$2" = "--help" ]; then
 	echo "Python Environment Switcher"
 	echo "It activates environments located in $HOME/python-environments/"
 	echo
-	echo "Usage: 'pyswitch [ENVIRONMENT] [OPTIONS]' or 'pyswitch deactivate'"
+	echo "Usage: 'pyswitch [ENVIRONMENT (optional)] [OPTIONS]'"
 	echo
-	echo "Options: --create --delete --help"
+	echo "Options: --create --delete --deactivate --current --help"
+	echo "Only --create and --delete need ENVIRONMENT to be specified"
 else
 
 	if [ ! -d "$HOME/python-environments" ]; then
@@ -32,10 +33,16 @@ else
 		fi
 	fi
 
-	if [ $# = 1 ] && [ "$1" = "deactivate" ]; then
+	if [ $# = 1 ] && [ "$1" = "--deactivate" ]; then
 		if command -v deactivate &> /dev/null ; then
 			deactivate
-			echo "Environment deactivated. Now using $(which python3)."
+			echo "Environment $PYSWITCH_ENVIRONMENT deactivated. Now using $(which python3)."
+		else
+			echo "No environment is currently checked."
+		fi
+	elif [ $# = 1 ] && [ "$1" = "--current" ]; then
+		if command -v deactivate &> /dev/null ; then
+			echo "Current environment is $PYSWITCH_ENVIRONMENT"
 		else
 			echo "No environment is currently checked."
 		fi
@@ -57,6 +64,7 @@ else
 				else
 					python3 -m venv "$HOME/python-environments/$1"
 					source "$HOME/python-environments/$1/bin/activate"
+					export PYSWITCH_ENVIRONMENT="$1"
 					echo "Created and selected Python environment $1"
 				fi
 			fi
@@ -65,6 +73,7 @@ else
 				deactivate
 			fi
 			source "$HOME/python-environments/$1/bin/activate"
+			export PYSWITCH_ENVIRONMENT="$1"
 			echo "Switched to Python environment $1"
 		fi
 	elif [ "$2" = "--create" ] && [ $# = 2 ]; then

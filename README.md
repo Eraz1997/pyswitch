@@ -72,6 +72,18 @@ pyswitch [ENVIRONMENT_NAME]
 
 * If selected environment is not present, pyswitch will ask if you'll want to create it.
 
+* You can check which is the current environment with
+
+```
+pyswitch --current
+```
+
+* You can check deactivate current environment with
+
+```
+pyswitch --deactivate
+```
+
 ### Delete environment
 
 * Open a shell and run
