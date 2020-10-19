@@ -1,5 +1,10 @@
 #!/bin/bash
 
+if [ "$EUID" = 0 ]; then
+  echo "Please don't run pyswitch as root."
+  exit
+fi
+
 if command -v git &> /dev/null ; then
 	if ! git fetch --dry-run &> /dev/null ; then
 		echo "Update available. Updating..."
